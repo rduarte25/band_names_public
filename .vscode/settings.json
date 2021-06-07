@@ -1,0 +1,7 @@
+{
+    "dart.buildRunnerAdditionalArgs": [
+        "-v",
+        "--dedug",
+        "--no-sound-null-safety"
+    ]
+}
