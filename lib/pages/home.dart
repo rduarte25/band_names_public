@@ -38,9 +38,9 @@ class _HomePageState extends State<HomePage> {
         itemCount: bands.length,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon( Icons.add ),
+        child: Icon(Icons.add),
         elevation: 1,
-        onPressed: () {  },
+        onPressed: addNewBand,
       ),
     );
   }
@@ -60,5 +60,30 @@ class _HomePageState extends State<HomePage> {
         print(band.name!);
       },
     );
+  }
+
+  /* Método para añadir una nueva banda */
+  addNewBand() {
+    final TextEditingController textController = new TextEditingController();
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('New band name'),
+            content: TextField(
+              controller: textController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                  child: Text('Add'),
+                  elevation: 5,
+                  textColor: Colors.blue,
+                  onPressed: () {
+                    print( textController.text );
+                  })
+            ],
+          );
+        });
   }
 }
