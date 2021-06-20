@@ -22,6 +22,7 @@ class StatusPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.message),
         onPressed: () {  },
       ),
     );
