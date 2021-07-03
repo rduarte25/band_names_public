@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 
 //terceros
+import 'package:provider/provider.dart';
 
 //Propios
+import 'package:band_names/services/socket_service.dart';
 import 'package:band_names/models/band.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
+}
+
+@override
+void initState() {
+  final socketService = Provider.of<SocketService>(context);
+  socketService.socket.on('active-bands', (payload) {
+    this.bands = (payload as List).map((obj) => Band.fromMap(obj)).toList();
+  });
+
+  setState(() {});
+
+  super.initState();
+}
+
+@override
+void dispose() {
+  final socketService = Provider.of<SocketService>(context, listen = false);
+  socketService.socket.off('active-bands');
+
+  super.dispose();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -46,6 +68,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   ListTile _bandTile(Band band) {
+    final socketService = Provider.of<SocketService>(context);
+
     return ListTile(
       leading: CircleAvatar(
         child: Text(band.name!.substring(0, 2)),
@@ -80,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   elevation: 5,
                   textColor: Colors.blue,
                   onPressed: () {
-                    print( textController.text );
+                    print(textController.text);
                   })
             ],
           );
